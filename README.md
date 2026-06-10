@@ -1,6 +1,27 @@
 # Money Tracker (public template)
 
-Personal expense tracking with a CSV pipeline, trip **sequences**, asset snapshots, and an interactive **Dash** dashboard. This repository is a sanitized template: it ships with **fictional demo data** and only a reference **N26 CSV reader**. Bank- and broker-specific parsers are intentionally omitted so you can add your own formats without exposing private account details.
+> **This repo is ready to use as-is** — run the dashboard on fictional demo data immediately.  
+> **It is also ready to hand to an AI agent** (Cursor, Copilot, Claude Code, …): open the project, point the agent at [`docs/AGENTS.md`](docs/AGENTS.md), and ask it to walk you through installation and wiring your real banks and asset reports.
+
+Personal expense tracking with a CSV pipeline, trip **sequences**, asset snapshots, and an interactive **Dash** dashboard. This is a sanitized template: it ships with **fictional demo data** and only a reference **N26 CSV reader**. Bank- and broker-specific parsers are omitted so you can add your own formats without exposing private account details.
+
+## Demo app snapshots
+
+Screenshots captured from the bundled demo (12 transactions, fictional asset balances ~**€25.7k** total):
+
+| Expenses | Assets |
+|----------|--------|
+| ![Expenses charts and table](docs/screenshots/01-expenses.png) | ![Assets overview with balances](docs/screenshots/02-assets.png) |
+
+| Sequences | Data & mappings |
+|-----------|-----------------|
+| ![Sequences tab](docs/screenshots/03-sequences.png) | ![Partner and category mappings](docs/screenshots/04-data-mappings.png) |
+
+Regenerate after UI changes:
+
+```bash
+python scripts/capture_readme_screenshots.py
+```
 
 ## Quick start
 
@@ -11,7 +32,13 @@ pip install -r requirements.txt
 python -m money_tracker.dashboard
 ```
 
-Open http://127.0.0.1:8050 — the dashboard loads demo transactions from `csv_files/n26/demo_transactions.csv`.
+Open http://127.0.0.1:8050 — demo transactions load from `csv_files/n26/demo_transactions.csv`.
+
+If port 8050 is already in use (e.g. another local instance):
+
+```bash
+MONEY_TRACKER_PORT=8051 python -m money_tracker.dashboard
+```
 
 Optional helper script (repo-only, no Google Drive paths):
 
@@ -19,17 +46,115 @@ Optional helper script (repo-only, no Google Drive paths):
 bash scripts/start_local_dev.sh
 ```
 
+## How data is processed
+
+Two pipelines feed the dashboard. Format-specific logic lives only in **readers** (expenses) and **parsers** (asset reports).
+
+### Expense / checking CSV pipeline
+
+```mermaid
+flowchart LR
+  CSV["csv_files/&lt;source_id&gt;/*.csv"]
+  REG["sources/registry.py"]
+  RD["sources/readers/*"]
+  FMT["sources/*_format.py"]
+  NORM["sources/normalize.py"]
+  PIPE["data_loading.run_pipeline"]
+  UI["dashboard / charts"]
+
+  CSV --> REG --> RD --> FMT --> NORM --> PIPE --> UI
+```
+
+Steps:
+
+1. **Discover** — `sources/loader.py` walks `csv_files/` (subfolder name = `source_id`).
+2. **Read** — registry picks a `BankReader` (`n26` is bundled; add yours for other banks).
+3. **Normalize** — rows become canonical columns (`Partner Name`, `Booking Date`, `Amount (EUR)`, …).
+4. **Pipeline** — dedupe, partner mappings (`mappings.txt`), categories (`category_mapping.txt`), optional settlement filter.
+5. **Dashboard** — charts, table, sequences, reports.
+
+### Asset balance pipeline
+
+```mermaid
+flowchart LR
+  REP["asset_reports/*"]
+  AJ["assets.json"]
+  AREG["assets/parsers/registry.py"]
+  PAR["assets/parsers/*"]
+  LOG["assets_log.json"]
+  ENG["assets/engine.py"]
+  UI["Assets tab"]
+
+  AJ --> ENG
+  REP --> AREG --> PAR --> LOG
+  ENG --> LOG
+  ENG --> UI
+```
+
+Steps:
+
+1. **Register assets** — `assets.json` lists each account, currency, optional `parser` and `expense_source_id`.
+2. **Ingest reports** — engine scans `asset_reports/`, runs the matching parser, appends snapshots to `assets_log.json`.
+3. **Project bank balances** — checking assets with `expense_source_id` add CSV transaction deltas since the latest snapshot anchor.
+4. **Overview** — totals, history charts, and % change on the Assets tab.
+
+### End-to-end view
+
+```mermaid
+flowchart TB
+  subgraph inputs [User data]
+    CSV[csv_files]
+    AR[asset_reports]
+    CFG[mappings / categories / assets.json]
+  end
+
+  subgraph code [Extension points]
+    READERS[sources/readers + registry]
+    PARSERS[assets/parsers + registry]
+  end
+
+  subgraph core [Shared core — do not fork]
+    LOAD[data_loading + loader]
+    ASSETS[assets/engine + log]
+    DASH[dashboard]
+  end
+
+  CSV --> READERS --> LOAD
+  AR --> PARSERS --> ASSETS
+  CFG --> LOAD
+  CFG --> ASSETS
+  LOAD --> DASH
+  ASSETS --> DASH
+```
+
+## Working with an AI agent
+
+Give your agent this repo and say something like:
+
+> “Read `docs/AGENTS.md` and help me replace the demo data with my accounts. Ask me for samples before writing any interpreters.”
+
+The agent should:
+
+1. **Verify installation** — dependencies, dashboard on demo data, port conflicts.
+2. **Ask you for samples** — one redacted export per checking/card source; one redacted report per asset type (PDF/Excel showing balance + as-of date).
+3. **Implement interpreters** — new modules under `sources/readers/`, `sources/*_format.py`, and `assets/parsers/`; register them; add tests.
+4. **Wire your config** — `csv_files/`, `assets.json`, mappings, optional `.env`.
+5. **Run tests** and confirm the dashboard shows your data.
+
+Full step-by-step checklist: **[docs/AGENTS.md](docs/AGENTS.md)**
+
 ## What you get out of the box
 
 | Included | Purpose |
 |----------|---------|
-| `csv_files/n26/demo_transactions.csv` | Fictional N26-shaped export |
+| `csv_files/n26/demo_transactions.csv` | Fictional N26-shaped export (12 rows) |
 | `mappings.txt`, `category_mapping.txt` | Partner normalization and categories |
 | `permitted_categories.txt` | Allowed category labels |
 | `assets.json` | Two demo assets (checking + savings) |
-| `assets_log.json` | Fictional balance snapshots (checking anchor + savings history) |
+| `assets_log.json` | Fictional balance snapshots (~€7.5k checking projected, ~€18.3k savings) |
 | `sequences.json` | Sample trip sequence |
 | `exchange_rates.json` | FX rates for multi-currency views |
+| `docs/screenshots/` | Demo UI captures for this README |
 
 ## Configuration (`.env`)
 
@@ -75,6 +200,7 @@ See [docs/adding-parsers.md](docs/adding-parsers.md).
 csv_files/           # Bank CSV exports (subfolder per source_id)
 asset_reports/       # Balance/holdings reports for asset parsers
 assets.json          # Asset registry
+assets_log.json      # Balance snapshot history
 mappings.txt         # Partner name normalization
 category_mapping.txt # Partner → category
 sequences.json       # Trip / event sequences
@@ -82,13 +208,17 @@ money_tracker/       # Application code
   sources/           # CSV readers + loader
   assets/            # Asset engine + report parsers
   dashboard.py       # Dash UI entry point
+docs/
+  AGENTS.md          # AI agent onboarding playbook
+  screenshots/       # Demo UI captures
 ```
 
 ## Dashboard features
 
-- **Charts** — filter by date, category, and period (week/month).
-- **Sequences** — group expenses into trips or events.
+- **Expenses** — filter by date, category, and period (week/month).
 - **Assets** — track balances; bank accounts can follow CSV transaction totals.
+- **Sequences** — group expenses into trips or events.
+- **Data & mappings** — edit partner and category rules.
 - **Reports** — export PDF or email HTML summary (email requires `.env`).
 
 ## PDF export on Linux/WSL
