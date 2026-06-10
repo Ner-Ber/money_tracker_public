@@ -1,0 +1,8 @@
+# Optional local dev config (copy to sources.yaml in repo root).
+# Flat csv_files/*.csv uses the N26 reader by default.
+
+sources:
+  n26:
+    reader: n26
+  other:
+    reader: unknown  # replace when you add a bank-specific reader

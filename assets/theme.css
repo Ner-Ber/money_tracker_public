@@ -1,0 +1,1010 @@
+/* ==========================================================================
+   Money Tracker - Modern Web Native theme
+   Two synchronized modes selected at runtime via [data-theme] on <html>:
+     - "teal"  (light, default)
+     - "dark"
+   All UI colors are driven by CSS variables so a single attribute swap
+   re-themes the entire interface instantly.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ---- Teal (Light) mode — default ---- */
+:root,
+html[data-theme="teal"] {
+  --bg: #f8f9fa;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --accent: #17a2b8;
+  --accent-hover: #138496;
+  --accent-soft: rgba(23, 162, 184, 0.12);
+  --accent-contrast: #ffffff;
+
+  --card-bg: #ffffff;
+  --alt-bg: #e9ecef;
+  --border: #e3e7eb;
+  --border-strong: #ced4da;
+  --divider: #eceff1;
+
+  --input-bg: #ffffff;
+  --input-border: #ced4da;
+  --input-text: #212529;
+
+  --table-header-bg: #e9ecef;
+  --table-header-text: #343a40;
+  --table-row-alt: #f4f6f8;
+  --table-text: #212529;
+  --row-highlight: #d6f0e4;
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+  --shadow-md: 0 2px 6px rgba(16, 24, 40, 0.08), 0 4px 12px rgba(16, 24, 40, 0.06);
+
+  --banner-warn-bg: #fff3e0;
+  --banner-warn-text: #e65100;
+  --banner-error-bg: #ffebee;
+  --banner-error-text: #c62828;
+}
+
+/* ---- Dark mode ---- */
+html[data-theme="dark"] {
+  --bg: #1e1e1e;
+  --text-primary: #dddddd;
+  --text-secondary: #bbbbbb;
+  --accent: #4dabf7;
+  --accent-hover: #74c0fc;
+  --accent-soft: rgba(77, 171, 247, 0.16);
+  --accent-contrast: #0b1220;
+
+  --card-bg: #2d2d2d;
+  --alt-bg: #262626;
+  --border: #3a3a3a;
+  --border-strong: #4a4a4a;
+  --divider: #353535;
+
+  --input-bg: #262626;
+  --input-border: #4a4a4a;
+  --input-text: #dddddd;
+
+  --table-header-bg: #333333;
+  --table-header-text: #e6e6e6;
+  --table-row-alt: #272727;
+  --table-text: #dddddd;
+  --row-highlight: #2c4a3e;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+
+  --banner-warn-bg: #3a2f1a;
+  --banner-warn-text: #ffb74d;
+  --banner-error-bg: #3a2222;
+  --banner-error-text: #ef9a9a;
+}
+
+/* ==========================================================================
+   Base / typography
+   ========================================================================== */
+
+html,
+body {
+  background: var(--bg) !important;
+  color: var(--text-primary);
+  font-family: "Inter", "Roboto", "Lato", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif !important;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+#main-container {
+  color: var(--text-primary);
+}
+
+/* Main page title — 2rem, bold */
+.app-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin: 18px 0 14px;
+}
+
+/* Section headings (H3/H4) — category/section level */
+#main-container h3,
+#main-container h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 18px 0 10px;
+}
+
+#main-container p,
+#main-container label {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+#main-container label {
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Cards / containers
+   ========================================================================== */
+
+.mt-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 18px;
+  transition: background-color 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.mt-card--flush {
+  padding: 14px 16px;
+}
+
+.mt-seq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .mt-seq-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mt-seq-grid .mt-card {
+  margin-bottom: 0;
+}
+
+.mt-seq-plot {
+  width: 100%;
+  min-height: 300px;
+}
+
+.mt-seq-expenses-modal .modal-dialog {
+  max-width: min(1140px, 96vw);
+}
+
+.mt-seq-expenses-modal .modal-body {
+  padding-top: 0.5rem;
+}
+
+.seq-frame-modal-table-wrap .dash-spreadsheet-container {
+  width: 100%;
+}
+
+.mt-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.mt-pill-row-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.mt-pill-row-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.mt-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Pills (chips) are buttons, but must not look like primary actions. */
+#main-container button.mt-pill {
+  /* Off state */
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.85rem;
+  font-weight: 650;
+  box-shadow: none !important;
+}
+
+#main-container button.mt-pill:hover {
+  border-color: var(--accent) !important;
+  background: var(--accent-soft) !important;
+  color: var(--text-primary) !important;
+}
+
+#main-container button.mt-pill.mt-pill--active {
+  /* On state */
+  background: var(--accent) !important;
+  color: var(--accent-contrast) !important;
+  border-color: var(--accent) !important;
+}
+
+/* Income/Refund pill shading: visually distinct from expense categories. */
+#main-container button.mt-pill.mt-pill--income-refund {
+  background: rgba(120, 120, 120, 0.18);
+  border-color: rgba(120, 120, 120, 0.35);
+}
+
+html[data-theme="dark"] #main-container button.mt-pill.mt-pill--income-refund {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+#main-container button.mt-pill.mt-pill--income-refund.mt-pill--active {
+  background: rgba(120, 120, 120, 0.75);
+  color: #ffffff;
+  border-color: rgba(120, 120, 120, 0.75);
+}
+
+html[data-theme="dark"] #main-container button.mt-pill.mt-pill--income-refund.mt-pill--active {
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.30);
+}
+
+.mt-muted {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   Tabs + mode toggle row
+   ========================================================================== */
+
+.mt-tabbar-wrap {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+
+/* dcc.Tabs renders its label bar; we keep it transparent and let the
+   per-tab inline styles (CSS vars) carry the colors. */
+.mt-tabs-parent .mt-tabs {
+  border: none !important;
+  background: transparent !important;
+}
+
+.mt-tab,
+.mt-tab--selected {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.mt-tab:hover {
+  color: var(--text-primary) !important;
+}
+
+/* The toggle sits at the right end of the same horizontal row as the tabs. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 6px 0 14px;
+  border-radius: 999px;
+  background: var(--alt-bg);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.theme-toggle-label {
+  letter-spacing: 0.02em;
+  min-width: 38px;
+  text-align: right;
+}
+
+/* The pill knob; slides based on the active theme. */
+.theme-toggle-track {
+  position: relative;
+  width: 44px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  transition: background-color 0.25s ease;
+  flex: none;
+}
+
+.theme-toggle-track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+html[data-theme="teal"] .theme-toggle-track {
+  background: var(--accent);
+}
+
+html[data-theme="dark"] .theme-toggle-track {
+  background: var(--accent);
+}
+
+html[data-theme="dark"] .theme-toggle-track::after {
+  transform: translateX(22px);
+  background: #0b1220;
+}
+
+/* ==========================================================================
+   Form fields & controls
+   ========================================================================== */
+
+#main-container input[type="text"],
+#main-container input[type="number"],
+#main-container input[type="search"] {
+  background: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.25s ease;
+}
+
+#main-container input[type="text"]:focus,
+#main-container input[type="number"]:focus,
+#main-container input[type="search"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Buttons — primary action style derived from the active accent.
+   Exclude Plotly modebar and datepicker controls; they need compact UI. */
+#main-container button:not(.modebar-btn):not(.dash-datepicker-month-nav),
+#main-container .dash-button {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.2s ease, transform 0.05s ease,
+    box-shadow 0.2s ease;
+}
+
+#main-container button:not(.modebar-btn):not(.dash-datepicker-month-nav):hover {
+  background: var(--accent-hover);
+}
+
+#main-container button:not(.modebar-btn):not(.dash-datepicker-month-nav):active {
+  transform: translateY(1px);
+}
+
+/* The mode toggle is a button element but must keep its pill styling. */
+#main-container button.theme-toggle {
+  background: var(--alt-bg);
+  color: var(--text-secondary);
+}
+
+#main-container button.theme-toggle:hover {
+  background: var(--alt-bg);
+  color: var(--text-primary);
+}
+
+/* react-select dropdowns (dcc.Dropdown) */
+#main-container .Select-control,
+#main-container .Select--multi .Select-control,
+#main-container .is-focused:not(.is-open) > .Select-control {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  border-radius: 8px !important;
+  color: var(--input-text) !important;
+}
+
+#main-container .Select-placeholder,
+#main-container .Select-value-label,
+#main-container .Select-input > input,
+#main-container .Select-value {
+  color: var(--input-text) !important;
+}
+
+#main-container .Select-menu-outer {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+}
+
+#main-container .Select-option {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+#main-container .Select-option.is-focused {
+  background: var(--accent-soft) !important;
+}
+
+#main-container .Select--multi .Select-value {
+  background: var(--accent-soft) !important;
+  border: 1px solid var(--accent) !important;
+  color: var(--text-primary) !important;
+  border-radius: 6px !important;
+}
+
+/* DatePicker — Dash dcc (react-dates legacy + dash-datepicker) */
+#main-container .SingleDatePickerInput,
+#main-container .DateInput {
+  background: var(--input-bg) !important;
+  border-radius: 8px !important;
+}
+
+#main-container .SingleDatePickerInput {
+  border: 1px solid var(--input-border) !important;
+}
+
+#main-container .DateInput_input {
+  background: var(--input-bg) !important;
+  color: var(--input-text) !important;
+  font-size: 0.9rem !important;
+  border-bottom: 2px solid transparent !important;
+  min-width: 7.5rem !important;
+}
+
+#main-container .DateInput_input__focused {
+  border-bottom: 2px solid var(--accent) !important;
+}
+
+#main-container .DayPickerNavigation_button {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 3px 8px !important;
+  min-width: unset !important;
+  box-shadow: none !important;
+  color: var(--text-secondary) !important;
+}
+
+#main-container .DayPickerNavigation_button:hover {
+  background: var(--accent-soft) !important;
+  color: var(--text-primary) !important;
+}
+
+#main-container .DayPickerNavigation_svg__horizontal {
+  fill: currentColor !important;
+}
+
+#main-container .dash-datepicker-month-nav {
+  background: transparent !important;
+  color: var(--accent) !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 0 !important;
+  min-width: 20px !important;
+  width: 20px !important;
+  height: 32px !important;
+  box-shadow: none !important;
+  font-weight: normal !important;
+}
+
+#main-container .dash-datepicker-month-nav:hover:not(:disabled) {
+  background: var(--accent-soft) !important;
+}
+
+#main-container .dash-datepicker-month-nav svg {
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  fill: currentColor !important;
+}
+
+#main-container .dash-datepicker-controls .dash-input {
+  min-width: calc(5ch + 40px) !important;
+  width: calc(5ch + 40px) !important;
+}
+
+#main-container .dash-datepicker-controls .dash-input input {
+  min-width: 4.5ch !important;
+  width: 100% !important;
+  text-align: center;
+  color: var(--input-text) !important;
+  background: var(--input-bg) !important;
+}
+
+#main-container .dash-datepicker .dash-input-stepper button {
+  background: transparent !important;
+  color: var(--text-secondary) !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  min-width: 20px !important;
+  width: 20px !important;
+  box-shadow: none !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+}
+
+#main-container .dash-datepicker .dash-input-stepper button:hover {
+  background: var(--accent-soft) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Radio items spacing */
+#main-container .dash-radio-items label,
+#main-container input[type="radio"] + label {
+  margin-right: 14px;
+}
+
+/* ==========================================================================
+   DataTables
+   ========================================================================== */
+
+#main-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
+  font-size: 0.85rem;
+}
+
+#main-container .dash-spreadsheet-container .dash-spreadsheet-inner th,
+#main-container .dash-header {
+  background: var(--table-header-bg) !important;
+  color: var(--table-header-text) !important;
+  border-color: var(--border) !important;
+  font-weight: 600 !important;
+}
+
+/* Cell background is intentionally NOT !important so per-row conditional
+   highlighting (e.g. rows already in a sequence) can win via inline styles. */
+#main-container .dash-spreadsheet-container .dash-spreadsheet-inner td,
+#main-container .dash-cell {
+  background: var(--card-bg);
+  color: var(--table-text) !important;
+  border-color: var(--border) !important;
+}
+
+#main-container .dash-spreadsheet-container .dash-cell .dash-cell-value,
+#main-container .dash-cell input {
+  color: var(--table-text) !important;
+  background: transparent !important;
+}
+
+/* Scrollable table panels (defined ids in datatable-scroll-viewport.css). */
+.scrollable-table-viewport {
+  border: 1px solid var(--border) !important;
+  border-radius: 8px;
+  background: var(--card-bg);
+}
+
+.scrollable-table-range {
+  color: var(--text-secondary) !important;
+}
+
+/* ==========================================================================
+   Plotly graph surfaces (blend chart container edges into the cards)
+   ========================================================================== */
+
+.js-plotly-plot,
+.plot-container {
+  background: transparent !important;
+}
+
+#main-container button.modebar-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-radius: 0;
+  padding: 3px 4px;
+  height: 22px;
+  min-width: unset;
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: normal;
+}
+
+#main-container button.modebar-btn:hover {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+#main-container button.modebar-btn:active {
+  transform: none;
+}
+
+/* ---- Assets Overview tab ---- */
+.mt-card.mt-assets-total {
+  padding: 22px 24px;
+}
+
+.mt-assets-total {
+  --assets-bar-checking: var(--accent);
+  --assets-bar-savings: color-mix(in srgb, var(--accent) 45%, var(--text-secondary));
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+html[data-theme="dark"] .mt-assets-total {
+  --assets-bar-savings: color-mix(in srgb, var(--accent) 55%, var(--alt-bg));
+}
+
+.mt-assets-total__summary {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.mt-assets-total__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mt-assets-total__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.mt-assets-total__amount {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.mt-assets-total__asof {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.mt-assets-total__bar {
+  display: flex;
+  width: 100%;
+  height: 11px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--alt-bg);
+}
+
+.mt-assets-total__bar--empty {
+  background: var(--divider);
+}
+
+.mt-assets-total__bar-seg {
+  height: 100%;
+  min-width: 0;
+  transition: width 0.25s ease;
+}
+
+.mt-assets-total__bar-seg--checking {
+  background: var(--assets-bar-checking);
+}
+
+.mt-assets-total__bar-seg--savings {
+  background: var(--assets-bar-savings);
+}
+
+.mt-assets-total__badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px 16px;
+  margin-top: 2px;
+}
+
+.mt-assets-total__badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.mt-assets-total__badge--checking {
+  background: var(--assets-bar-checking);
+  color: var(--accent-contrast);
+}
+
+.mt-assets-total__badge--savings {
+  background: var(--assets-bar-savings);
+  color: var(--text-primary);
+  margin-left: auto;
+}
+
+.mt-assets-total__badge-label {
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.mt-assets-total__badge--checking .mt-assets-total__badge-label {
+  color: color-mix(in srgb, var(--accent-contrast) 82%, transparent);
+}
+
+.mt-assets-total__badge--savings .mt-assets-total__badge-label {
+  color: color-mix(in srgb, var(--text-primary) 72%, transparent);
+}
+
+.mt-assets-total__badge-hint {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  opacity: 0.9;
+}
+
+.mt-assets-total__badge-hint::before {
+  content: " · ";
+  opacity: 0.7;
+}
+
+.mt-assets-total__badge-value {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.mt-assets-total__badge--checking .mt-assets-total__badge-value {
+  color: var(--accent-contrast);
+}
+
+.mt-assets-total__badge--savings .mt-assets-total__badge-value {
+  color: var(--text-primary);
+}
+
+.mt-assets-total__currency {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-end;
+  margin-left: auto;
+  margin-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .mt-assets-total__badges {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mt-assets-total__badge--savings {
+    margin-left: 0;
+    align-self: flex-end;
+  }
+}
+
+.mt-assets-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.mt-assets-upload {
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  padding: 12px 20px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  background: var(--alt-bg);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.mt-assets-upload:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.mt-assets-status {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.mt-assets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.mt-asset-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.mt-asset-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.mt-asset-card__name {
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: var(--text-primary);
+}
+
+.mt-asset-card__type {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: var(--alt-bg);
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.mt-asset-card__value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.mt-asset-card__native {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.mt-asset-card__changes {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.mt-asset-card__pct-label {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.mt-change--up {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.mt-change--down {
+  color: #c62828;
+  font-weight: 600;
+}
+
+html[data-theme="dark"] .mt-change--up {
+  color: #81c784;
+}
+
+html[data-theme="dark"] .mt-change--down {
+  color: #ef9a9a;
+}
+
+.mt-change--na {
+  color: var(--text-secondary);
+}
+
+.mt-asset-card__breakdown {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.mt-asset-card__sub-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  margin-bottom: 4px;
+}
+
+.mt-asset-card__sub-label {
+  color: var(--text-secondary);
+}
+
+.mt-asset-card__sub-value {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.mt-asset-card__manual {
+  margin-top: 12px;
+  font-size: 0.85rem;
+}
+
+.mt-asset-card__manual summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.mt-asset-card__upload {
+  margin-top: 10px;
+}
+
+.mt-asset-card__upload-wrap {
+  display: inline-block;
+}
+
+.mt-asset-card__upload-msg {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+.mt-asset-card__upload-msg--success {
+  color: #2e7d32;
+}
+
+.mt-asset-card__upload-msg--error {
+  color: #c62828;
+}
+
+html[data-theme="dark"] .mt-asset-card__upload-msg--success {
+  color: #81c784;
+}
+
+html[data-theme="dark"] .mt-asset-card__upload-msg--error {
+  color: #ef9a9a;
+}
+
+.mt-asset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mt-asset-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mt-asset-form-msg {
+  font-size: 0.9rem;
+  color: #c62828;
+  min-height: 1.2em;
+}
+
+html[data-theme="dark"] .mt-asset-form-msg {
+  color: #ef9a9a;
+}

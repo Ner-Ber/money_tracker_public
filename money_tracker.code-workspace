@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.formatOnSave": true,
+		"python.formatting.provider": "autopep8",
+		"workbench.colorCustomizations": {
+			"titleBar.activeBackground": "#06813e",
+			"titleBar.activeForeground": "#ffffff",
+			"titleBar.inactiveBackground": "#023a1b",
+			"titleBar.inactiveForeground": "#c8e6d0",
+			// Background of the whole activity bar
+			"activityBar.background": "#06813e",
+			// Color of the icons (and text when extensions add labels)
+			"activityBar.foreground": "#ffffff",
+			// Hover effect (background when you hover over icons)
+			"activityBar.inactiveForeground": "#c8e6d0",
+			// Border at the right edge of the activity bar
+			"activityBar.border": "#023a1b",
+			// Active item (icon + underline highlight)
+			"activityBar.activeBorder": "#06813e",
+			"activityBar.activeBackground": "#06813e",
+			"activityBar.activeFocusBorder": "#06813e"
+		},
+	},
+}

@@ -1,0 +1,12 @@
+Corner Market	Groceries
+Metro Transit	Transportation
+Cafe Aurora	Cafe & Dine
+City Utilities	Utilities / Bills
+Employer Payroll	Income / Refund
+Online Bookstore	Entertainment
+Weekend Trip Host	Trips
+Pharmacy Plus	Health & Insurance
+Streaming Service	Entertainment
+Home Supply Co	Household
+Refund Shop	Income / Refund
+Restaurant Row	Cafe & Dine

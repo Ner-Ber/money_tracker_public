@@ -1,0 +1,2 @@
+# Sequence format: sequence_name, category, start_date, end_date, expense_indices
+Neri in Israel, Trips, 2025-09-15, 2025-09-22, 

@@ -1,0 +1,17 @@
+{
+    "Kaufland Leipzig Plagwitz": {
+        "category": "Uncategorized",
+        "osm_class": null,
+        "osm_type": null
+    },
+    "Rewe Leipzig": {
+        "category": "Groceries",
+        "osm_class": "shop",
+        "osm_type": "supermarket"
+    },
+    "Aral Tankstelle Leipzig": {
+        "category": "Transport",
+        "osm_class": "amenity",
+        "osm_type": "fuel"
+    }
+}

@@ -1,0 +1,16 @@
+{
+  "sequences": [
+    {
+      "name": "Weekend trip",
+      "time_spans": [
+        {
+          "start": "2025-10-11",
+          "end": "2025-10-13"
+        }
+      ],
+      "expense_indices": [],
+      "exclude_indices": [],
+      "category": "Trips"
+    }
+  ]
+}

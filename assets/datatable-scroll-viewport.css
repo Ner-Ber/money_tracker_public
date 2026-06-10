@@ -1,0 +1,26 @@
+/* Scrollable expense tables: range bar below the scroll viewport. */
+
+.scrollable-table-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scrollable-table-viewport {
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.scrollable-table-range-bar {
+  display: flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 2px 4px;
+}
+
+.scrollable-table-range {
+  font-size: 13px;
+  color: #555;
+}

@@ -1,0 +1,13 @@
+Booking Date,Value Date,Partner Name,Partner Iban,Type,Payment Reference,Account Name,Amount (EUR),Original Amount,Original Currency,Exchange Rate
+2025-10-01,2025-10-01,Corner Market,,Presentment,GROC-001,Main Account,-42.30,,EUR,
+2025-10-02,2025-10-02,Metro Transit,,Presentment,TICKET-88,Main Account,-3.50,,EUR,
+2025-10-03,2025-10-03,Cafe Aurora,,Presentment,,Main Account,-8.75,,EUR,
+2025-10-05,2025-10-05,City Utilities,,Direct Debit,OCT-2025,Main Account,-95.00,,EUR,
+2025-10-07,2025-10-07,Employer Payroll,,Income,SALARY-OCT,Main Account,2850.00,,EUR,
+2025-10-10,2025-10-10,Online Bookstore,,Presentment,ORD-4421,Main Account,-24.99,,EUR,
+2025-10-12,2025-10-12,Weekend Trip Host,,Transfer,TRIP-DEPOSIT,Main Account,-320.00,,EUR,
+2025-10-14,2025-10-14,Pharmacy Plus,,Presentment,,Main Account,-16.40,,EUR,
+2025-10-18,2025-10-18,Streaming Service,,Direct Debit,,Main Account,-12.99,,EUR,
+2025-10-22,2025-10-22,Home Supply Co,,Presentment,,Main Account,-67.15,,EUR,
+2025-10-25,2025-10-25,Refund Shop,,Refund,RF-9912,Main Account,19.50,,EUR,
+2025-10-28,2025-10-28,Restaurant Row,,Presentment,,Main Account,-54.20,,EUR,

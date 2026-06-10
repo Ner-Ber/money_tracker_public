@@ -1,0 +1,34 @@
+/* Make dash_table dropdowns visible above Bootstrap/table layers.
+   DataTable uses react-select; depending on dash-table version, classnames vary. */
+
+/* Avoid clipping the dropdown by spreadsheet containers */
+.dash-spreadsheet-container,
+.dash-spreadsheet-inner,
+.dash-spreadsheet,
+.dash-table-container {
+  overflow: visible !important;
+}
+
+/* Avoid clipping by cell wrappers */
+.dash-spreadsheet td,
+.dash-spreadsheet td > div,
+.dash-spreadsheet td .dash-cell-value {
+  overflow: visible !important;
+}
+
+/* Old react-select (v1) used by many dash-table builds */
+.dash-spreadsheet .Select,
+.dash-spreadsheet .Select-control {
+  z-index: 10000 !important;
+}
+.dash-spreadsheet .Select-menu-outer {
+  z-index: 10001 !important;
+}
+
+/* Newer react-select variants */
+.dash-spreadsheet .Select__menu,
+.dash-spreadsheet .Select__menu-portal,
+.dash-spreadsheet .Select__menu-list {
+  z-index: 10001 !important;
+}
+

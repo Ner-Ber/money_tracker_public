@@ -1,0 +1,11 @@
+{
+  "comment": "EUR value of 1 unit of each currency. Copy to exchange_rates.json in the data dir.",
+  "to_eur": {
+    "EUR": 1.0,
+    "ILS": 0.255,
+    "GBP": 1.17,
+    "USD": 0.92,
+    "CHF": 1.05,
+    "CZK": 0.041
+  }
+}

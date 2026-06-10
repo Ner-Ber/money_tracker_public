@@ -1,0 +1,19 @@
+{
+  "comment": "Balance snapshots appended by report ingest or manual updates. Demo values ship in assets_log.json.",
+  "snapshots": [
+    {
+      "asset_id": "demo_checking",
+      "as_of": "2025-09-30T00:00:00",
+      "value": 5245.5,
+      "currency": "EUR",
+      "source": "report"
+    },
+    {
+      "asset_id": "demo_savings",
+      "as_of": "2025-10-01T00:00:00",
+      "value": 18250.0,
+      "currency": "EUR",
+      "source": "report"
+    }
+  ]
+}

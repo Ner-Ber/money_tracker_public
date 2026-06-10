@@ -1,0 +1,17 @@
+{
+  "assets": [
+    {
+      "id": "demo_checking",
+      "name": "Demo Checking",
+      "type": "bank",
+      "currency": "EUR",
+      "expense_source_id": "n26"
+    },
+    {
+      "id": "demo_savings",
+      "name": "Demo Savings",
+      "type": "investment",
+      "currency": "EUR"
+    }
+  ]
+}

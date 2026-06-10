@@ -1,0 +1,19 @@
+.env
+category_cache.json
+*.pyc
+**/*.pyc
+*:Zone.Identifier
+.cursor/hooks/.pytest-last-run.json
+scripts/local_config.env
+scripts/partner_local_config.env
+
+# Replace demo data with your own (keep .example files in git)
+# Uncomment when you start using real exports:
+# csv_files/*
+# !csv_files/n26/demo_transactions.csv
+# asset_reports/*
+# assets.json
+# mappings.txt
+# category_mapping.txt
+# sequences.json
+# exchange_rates.json
