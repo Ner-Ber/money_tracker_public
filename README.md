@@ -7,15 +7,27 @@ Personal expense tracking with a CSV pipeline, trip **sequences**, asset snapsho
 
 ## Demo app snapshots
 
-Screenshots captured from the bundled demo (12 transactions, fictional asset balances ~**€25.7k** total):
+Screenshots captured from the bundled demo (12 transactions, fictional asset balances ~**€25.7k** total). Tab order matches the dashboard: **Assets Overview** (default), **Expenses**, **Sequences**, **Data & Mappings**.
 
-| Expenses | Assets |
-|----------|--------|
-| ![Expenses charts and table](docs/screenshots/01-expenses.png) | ![Assets overview with balances](docs/screenshots/02-assets.png) |
+### Teal (light)
+
+| Assets | Expenses |
+|--------|----------|
+| ![Assets overview with balances](docs/screenshots/02-assets.png) | ![Expenses charts and table](docs/screenshots/01-expenses.png) |
 
 | Sequences | Data & mappings |
 |-----------|-----------------|
 | ![Sequences tab](docs/screenshots/03-sequences.png) | ![Partner and category mappings](docs/screenshots/04-data-mappings.png) |
+
+### Dark
+
+| Assets | Expenses |
+|--------|----------|
+| ![Assets overview with balances (dark)](docs/screenshots/02-assets-dark.png) | ![Expenses charts and table (dark)](docs/screenshots/01-expenses-dark.png) |
+
+| Sequences | Data & mappings |
+|-----------|-----------------|
+| ![Sequences tab (dark)](docs/screenshots/03-sequences-dark.png) | ![Partner and category mappings (dark)](docs/screenshots/04-data-mappings-dark.png) |
 
 Regenerate after UI changes:
 

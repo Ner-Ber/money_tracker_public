@@ -34,6 +34,33 @@ def _click_tab(driver, label: str) -> None:
     raise RuntimeError(f"Tab not found: {label}")
 
 
+def _current_theme(driver) -> str:
+    return driver.execute_script(
+        "return document.documentElement.getAttribute('data-theme') || 'teal';"
+    )
+
+
+def _set_theme(driver, theme: str) -> None:
+    theme = "dark" if theme == "dark" else "teal"
+    for _ in range(3):
+        if _current_theme(driver) == theme:
+            return
+        driver.find_element(By.ID, "theme-toggle").click()
+        time.sleep(1.5)
+    raise RuntimeError(f"Could not switch theme to {theme}")
+
+
+def _capture_tab_screenshots(driver, out_dir: str, *, suffix: str = "") -> None:
+    _click_tab(driver, "Expenses")
+    driver.save_screenshot(os.path.join(out_dir, f"01-expenses{suffix}.png"))
+    _click_tab(driver, "Assets Overview")
+    driver.save_screenshot(os.path.join(out_dir, f"02-assets{suffix}.png"))
+    _click_tab(driver, "Sequences")
+    driver.save_screenshot(os.path.join(out_dir, f"03-sequences{suffix}.png"))
+    _click_tab(driver, "Data & Mappings")
+    driver.save_screenshot(os.path.join(out_dir, f"04-data-mappings{suffix}.png"))
+
+
 def main() -> int:
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     out_dir = os.path.join(repo_root, "docs", "screenshots")
@@ -62,13 +89,13 @@ def main() -> int:
         try:
             driver.get(base_url)
             time.sleep(3)
-            driver.save_screenshot(os.path.join(out_dir, "01-expenses.png"))
-            _click_tab(driver, "Assets Overview")
-            driver.save_screenshot(os.path.join(out_dir, "02-assets.png"))
-            _click_tab(driver, "Sequences")
-            driver.save_screenshot(os.path.join(out_dir, "03-sequences.png"))
-            _click_tab(driver, "Data & Mappings")
-            driver.save_screenshot(os.path.join(out_dir, "04-data-mappings.png"))
+            driver.execute_script("window.localStorage.clear();")
+            driver.refresh()
+            time.sleep(3)
+            _set_theme(driver, "teal")
+            _capture_tab_screenshots(driver, out_dir)
+            _set_theme(driver, "dark")
+            _capture_tab_screenshots(driver, out_dir, suffix="-dark")
         finally:
             driver.quit()
     finally:
